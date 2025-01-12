@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rent Agreement Generator</title>
+  <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.1/dist/pizzip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.26.0/build/docxtemplater.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+</head>
+<body>
+  <h1>Rent Agreement Generator</h1>
+  <form id="agreementForm">
+    <label for="ownerName">Owner Name:</label>
+    <input type="text" id="ownerName" name="ownerName" required><br>
+    <label for="ownerMobileNumber">Owner Mobile Number:</label>
+    <input type="tel" id="ownerMobileNumber" name="ownerMobileNumber" required><br>
+    <label for="tenantName">Tenant Name:</label>
+    <input type="text" id="tenantName" name="tenantName" required><br>
+    <label for="tenantFatherName">Tenant Father Name:</label>
+    <input type="text" id="tenantFatherName" name="tenantFatherName" required><br>
+    <label for="tenantAge">Tenant Age:</label>
+    <input type="number" id="tenantAge" name="tenantAge" required><br>
+    <label for="tenantAddress">Tenant Address:</label>
+    <input type="text" id="tenantAddress" name="tenantAddress" required><br>
+    <label for="tenantOfficeAddress">Tenant Office Address:</label>
+    <input type="text" id="tenantOfficeAddress" name="tenantOfficeAddress"><br>
+    <label for="tenantAdharNumber">Tenant Adhar Number:</label>
+    <input type="text" id="tenantAdharNumber" name="tenantAdharNumber" required><br>
+    <label for="tenantPanNumber">Tenant PAN Number:</label>
+    <input type="text" id="tenantPanNumber" name="tenantPanNumber" required><br>
+    <label for="flatAddress">Flat Address:</label>
+    <input type="text" id="flatAddress" name="flatAddress" required><br>
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" name="startDate" required><br>
+    <label for="rentAmount">Rent Amount:</label>
+    <input type="number" id="rentAmount" name="rentAmount" required><br>
+    <label for="rentAmountWords">Rent Amount (In Words):</label>
+    <input type="text" id="rentAmountWords" name="rentAmountWords" required><br>
+    <label for="depositAmount">Deposit Amount:</label>
+    <input type="number" id="depositAmount" name="depositAmount" required><br>
+    <label for="depositAmountWords">Deposit Amount (In Words):</label>
+    <input type="text" id="depositAmountWords" name="depositAmountWords" required><br>
+    <button type="submit">Generate Agreement</button>
+  </form>
+  <script src="script.js"></script>
+</body>
+</html>
+
