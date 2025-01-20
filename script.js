@@ -81,9 +81,34 @@ document.getElementById('agreementForm').addEventListener('submit', async (e) =>
 
     // Trigger the download
     saveAs(out, 'Rent_Agreement.docx');
+
+    // Filter out sensitive fields
+    const filteredData = {
+      today,
+      tenant_name: data.tenant_name,
+      tenant_unique_number: data.tenant_adhar_number,
+      stay_start_date: data.start_date,
+      rent_amount: data.rent_amount
+    };
+
+    // Send filtered data to Google Analytics
+    gtag('event', 'form_submission', {
+      event_category: 'Rent Agreement',
+      event_label: 'Agreement Generated',
+      value: 1,
+      ...filteredData,
+    });
+
   } catch (error) {
     console.error('Error generating document:', error);
     alert('Failed to generate the document. Please try again.');
+      // Send failure event to Google Analytics
+    gtag('event', 'form_failure', {
+      event_category: 'Rent Agreement',
+      event_label: 'Document Generation Failed',
+      error_message: error.message,
+      tenant_name: data.tenant_name,
+    });
   }
 });
 
