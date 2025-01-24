@@ -5,6 +5,15 @@ function calculateEndDate(startDate, months = 11) {
   return date
 }
 
+// Function to read the image file as a base64 string
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]); // Remove the base64 prefix
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
 document.getElementById('agreementForm').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -31,6 +40,10 @@ document.getElementById('agreementForm').addEventListener('submit', async (e) =>
     year: 'numeric',
   });
 
+    // Read the uploaded image
+  const imageFile = formData.get('imageInput');
+  const imageBase64 = await readFileAsBase64(imageFile);
+
   // Collect form data
    const data = {
     today,
@@ -50,9 +63,17 @@ document.getElementById('agreementForm').addEventListener('submit', async (e) =>
     rent_amount_words: formData.get('rentAmountWords'),
     deposit_amount: formData.get('depositAmount'),
     deposit_amount_words: formData.get('depositAmountWords'),
+    image_placeholder: imageBase64
   };
 
-  console.log(data); // For debugging purposes
+  // Configure the image module
+  const imageModule = new ImageModule({
+    centered: false,
+    getImage: (tag) => {
+      return window.atob(data.image_placeholder);
+    },
+    getSize: () => [260, 331],
+  });
 
   // Fetch the template file
   const templateResponse = await fetch('./template.docx');
@@ -63,7 +84,8 @@ document.getElementById('agreementForm').addEventListener('submit', async (e) =>
   const doc = new window.docxtemplater(zip, {
     paragraphLoop: true,
     linebreaks: true,
-  });
+    module: [imageModule]
+  })
 
   // Set the template variables
   doc.setData(data);
@@ -81,7 +103,7 @@ document.getElementById('agreementForm').addEventListener('submit', async (e) =>
 
     // Trigger the download
     saveAs(out, 'Rent_Agreement.docx');
-
+    
     // Filter out sensitive fields
     const filteredData = {
       today,
@@ -95,7 +117,7 @@ document.getElementById('agreementForm').addEventListener('submit', async (e) =>
     gtag('event', 'form_submission', {
       event_category: 'Rent Agreement',
       event_label: 'Agreement Generated',
-      value: 1,
+      value: 1, 
       ...filteredData,
     });
 
